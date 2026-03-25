@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Loans</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="top-bar">
+        <h1>Loans</h1>
+        <div>
+            <a class="btn" th:href="@{/}">Home</a>
+        </div>
+    </div>
+
+    <div th:if="${success}" class="alert success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+    <div class="form-columns">
+        <form th:action="@{/loans/borrow}" method="post" class="card-form">
+            <h2>Borrow Book</h2>
+            <label>Book</label>
+            <select name="bookId" required>
+                <option value="">Select a book</option>
+                <option th:each="book : ${books}" th:value="${book.id}"
+                        th:text="${book.title + ' (' + book.id + ')'}"></option>
+            </select>
+
+            <label>Member</label>
+            <select name="memberId" required>
+                <option value="">Select a member</option>
+                <option th:each="member : ${members}" th:value="${member.id}"
+                        th:text="${member.name + ' (' + member.id + ')'}"></option>
+            </select>
+
+            <button type="submit" class="btn primary">Borrow</button>
+        </form>
+
+        <form th:action="@{/loans/return}" method="post" class="card-form">
+            <h2>Return Book</h2>
+            <label>Book</label>
+            <select name="bookId" required>
+                <option value="">Select a book</option>
+                <option th:each="loan : ${loans}" th:if="${!loan.returned}" th:value="${loan.book.id}"
+                        th:text="${loan.book.title + ' (' + loan.book.id + ')'}"></option>
+            </select>
+
+            <label>Member</label>
+            <select name="memberId" required>
+                <option value="">Select a member</option>
+                <option th:each="member : ${members}" th:value="${member.id}"
+                        th:text="${member.name + ' (' + member.id + ')'}"></option>
+            </select>
+
+            <button type="submit" class="btn">Return</button>
+        </form>
+    </div>
+
+    <h2>Loan History</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Loan ID</th>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Borrow Date</th>
+            <th>Return Date</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="loan : ${loans}">
+            <td th:text="${loan.id}"></td>
+            <td th:text="${loan.book.title}"></td>
+            <td th:text="${loan.member.name}"></td>
+            <td th:text="${loan.borrowDate}"></td>
+            <td th:text="${loan.returnDate != null ? loan.returnDate : '-'}"></td>
+            <td>
+                <span th:if="${loan.returned}" class="badge available">Returned</span>
+                <span th:unless="${loan.returned}" class="badge borrowed">Active</span>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(loans)}">
+            <td colspan="6">No loans found.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

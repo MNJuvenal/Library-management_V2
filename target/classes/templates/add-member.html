@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Member</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container form-page">
+    <div class="top-bar">
+        <h1>Add Member</h1>
+        <div>
+            <a class="btn" th:href="@{/members}">Back to Members</a>
+        </div>
+    </div>
+
+    <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+    <form th:action="@{/members}" th:object="${member}" method="post" class="card-form">
+        <label>Member ID</label>
+        <input type="text" th:field="*{id}" required>
+
+        <label>Name</label>
+        <input type="text" th:field="*{name}" required>
+
+        <label>Email</label>
+        <input type="email" th:field="*{email}" required>
+
+        <button type="submit" class="btn primary">Save Member</button>
+    </form>
+</div>
+</body>
+</html>

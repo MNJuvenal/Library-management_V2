@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="top-bar">
+        <h1>Books</h1>
+        <div>
+            <a class="btn" th:href="@{/}">Home</a>
+            <a class="btn primary" th:href="@{/books/new}">Add Book</a>
+        </div>
+    </div>
+
+    <div th:if="${success}" class="alert success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.isbn}"></td>
+            <td>
+                <span th:if="${book.available}" class="badge available">Available</span>
+                <span th:unless="${book.available}" class="badge borrowed">Borrowed</span>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(books)}">
+            <td colspan="5">No books found.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

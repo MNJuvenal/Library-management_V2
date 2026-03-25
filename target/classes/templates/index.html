@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container home">
+    <h1>Library Management System</h1>
+    <p class="lead">Spring Boot + Thymeleaf + JPA + H2</p>
+
+    <div class="nav-grid">
+        <a class="card-link" th:href="@{/books}">
+            <h2>Books</h2>
+            <p>Browse and manage all books.</p>
+        </a>
+        <a class="card-link" th:href="@{/members}">
+            <h2>Members</h2>
+            <p>Create and manage members.</p>
+        </a>
+        <a class="card-link" th:href="@{/loans}">
+            <h2>Loans</h2>
+            <p>Borrow and return books.</p>
+        </a>
+    </div>
+</div>
+</body>
+</html>
